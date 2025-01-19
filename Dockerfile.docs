@@ -18,7 +18,7 @@ RUN corepack enable
 WORKDIR /opt/docusaurus
 
 ## Required by docusaurus: [ERROR] Loading of version failed for version current
-RUN apt-get update && apt-get install -y git 
+RUN apt-get update && apt-get install -y git
 
 FROM base AS dev
 ## Set the working directory to `/opt/docusaurus`.
@@ -33,7 +33,7 @@ FROM base AS preprod
 ## Set the working directory to `/opt/docusaurus`.
 WORKDIR /opt/docusaurus
 
-## This is in case someone needs to build the lock file 
+## This is in case someone needs to build the lock file
 #RUN apt install python-is-python3 g++ make -y
 
 COPY docs/package.json /opt/docusaurus/package.json
@@ -42,7 +42,7 @@ COPY docs/package-lock.json /opt/docusaurus/package-lock.json
 FROM preprod AS prod
 
 ## Install dependencies with `--immutable` to ensure reproducibility.
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install 
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
 ## Copy over the source code.
 COPY docs/ /opt/docusaurus/
